@@ -33,16 +33,38 @@ export const UserSchema = new mongoose.Schema({
   },
 });
 
-export const accountSchema = new mongoose.Schema({
+export const taskSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId, // Reference to User model
     ref: "User",
     required: true,
   },
-  balance: {
-    type: Number,
+  title: {
+    type: String,
     required: true,
+  },
+  description: {
+    type: String,
+    required: false,
+  },
+  status: {
+    type: Boolean,
+    default: false,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  completedAt: {
+    type: Date,
+    default: null,
   },
 });
 
-export const taskSchema = new mongoose.Schema({});
+const User = mongoose.model("User", UserSchema);
+const Tasks = mongoose.model("Task", taskSchema);
+
+module.exports = {
+  User,
+  Tasks,
+};
